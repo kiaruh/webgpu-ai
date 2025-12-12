@@ -1,4 +1,6 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
+import { ChatWidget } from '@/features/chat/ChatWidget'; // Import ChatWidget
 
 export const metadata: Metadata = {
   title: 'Immersive Intelligence Platform | WebGPU & AI',
@@ -33,6 +35,10 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
+
+      {/* Floating Chat Widget */}
+      <ChatWidget />
+
       <main className="relative z-10 flex flex-col items-center justify-center min-h-screen p-8 text-center">
         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-400">
           Immersive Intelligence
@@ -49,12 +55,18 @@ export default function Home() {
         </section>
 
         <div className="mt-12 flex flex-wrap gap-4 justify-center">
-          <button className="px-8 py-3 rounded-full bg-white text-black font-semibold hover:bg-neutral-200 transition-colors">
-            Enter Experience
-          </button>
-          <button className="px-8 py-3 rounded-full border border-neutral-700 hover:bg-neutral-900 transition-colors">
-            View Samples
-          </button>
+          <Link
+            href="/ads"
+            className="px-8 py-3 rounded-full bg-white text-black font-semibold hover:bg-neutral-200 transition-colors"
+          >
+            Enter Experience (WebGPU)
+          </Link>
+          <Link
+            href="/ai"
+            className="px-8 py-3 rounded-full border border-neutral-700 hover:bg-neutral-900 transition-colors"
+          >
+            View AI Samples (FastVLM)
+          </Link>
         </div>
       </main>
 

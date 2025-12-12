@@ -8,6 +8,7 @@
     "scripts": {
         "dev:client": "npm run dev --workspace=@immersive/client",
         "dev:server": "npm run start:dev --workspace=@immersive/server",
+        "dev": "concurrently \"npm:dev:client\" \"npm:dev:server\"",
         "build": "npm run build --workspaces",
         "lint": "npm run lint --workspaces"
     },

@@ -1,13 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  body {
-    @apply bg-black text-white antialiased overflow-x-hidden;
+@layer components {
+  canvas {
+    touch-action: none;
   }
-}
-
-canvas {
-  touch-action: none;
 }
