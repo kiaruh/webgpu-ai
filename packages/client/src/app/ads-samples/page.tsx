@@ -11,7 +11,7 @@ interface AdSample {
     title: string;
     description: string;
     href: string;
-    icon: React.ElementType;
+    icon: any;
     tags: string[];
     color: string;
 }
@@ -77,41 +77,44 @@ export default function AdsSamplesPage() {
 
                 {/* Grid */}
                 <main className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {adSamples.map((sample, idx) => (
-                        <Link
-                            key={sample.href}
-                            href={sample.href}
-                            className="group relative bg-zinc-900/50 backdrop-blur-xl border border-white/10 rounded-3xl p-8 hover:bg-zinc-900/80 hover:border-indigo-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/20 overflow-hidden"
-                        >
-                            {/* Hover Gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    {adSamples.map((sample, idx) => {
+                        const Icon = sample.icon;
+                        return (
+                            <Link
+                                key={sample.href}
+                                href={sample.href}
+                                className="group relative bg-zinc-900/50 backdrop-blur-xl border border-white/10 rounded-3xl p-8 hover:bg-zinc-900/80 hover:border-indigo-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/20 overflow-hidden"
+                            >
+                                {/* Hover Gradient */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                            <div className="relative z-10 flex flex-col h-full">
-                                {/* Icon Header */}
-                                <div className="flex justify-between items-start mb-8">
-                                    <div className={`p-4 rounded-2xl bg-white/5 border border-white/10 group-hover:scale-110 transition-transform duration-500 ${sample.color}`}>
-                                        <sample.icon size={32} />
+                                <div className="relative z-10 flex flex-col h-full">
+                                    {/* Icon Header */}
+                                    <div className="flex justify-between items-start mb-8">
+                                        <div className={`p-4 rounded-2xl bg-white/5 border border-white/10 group-hover:scale-110 transition-transform duration-500 ${sample.color}`}>
+                                            <Icon size={32} />
+                                        </div>
+                                        <ArrowRight className="text-zinc-600 group-hover:text-white -translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300" />
                                     </div>
-                                    <ArrowRight className="text-zinc-600 group-hover:text-white -translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300" />
-                                </div>
 
-                                {/* Content */}
-                                <h2 className="text-2xl font-bold mb-3">{sample.title}</h2>
-                                <p className="text-zinc-400 leading-relaxed mb-8 flex-grow">
-                                    {sample.description}
-                                </p>
+                                    {/* Content */}
+                                    <h2 className="text-2xl font-bold mb-3">{sample.title}</h2>
+                                    <p className="text-zinc-400 leading-relaxed mb-8 flex-grow">
+                                        {sample.description}
+                                    </p>
 
-                                {/* Tags */}
-                                <div className="flex flex-wrap gap-2 mt-auto">
-                                    {sample.tags.map(tag => (
-                                        <span key={tag} className="text-[10px] font-mono uppercase tracking-wider px-2 py-1 rounded bg-white/5 text-zinc-400 group-hover:text-zinc-200 border border-transparent group-hover:border-white/10 transition-colors">
-                                            {tag}
-                                        </span>
-                                    ))}
+                                    {/* Tags */}
+                                    <div className="flex flex-wrap gap-2 mt-auto">
+                                        {sample.tags.map(tag => (
+                                            <span key={tag} className="text-[10px] font-mono uppercase tracking-wider px-2 py-1 rounded bg-white/5 text-zinc-400 group-hover:text-zinc-200 border border-transparent group-hover:border-white/10 transition-colors">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        </Link>
-                    ))}
+                            </Link>
+                        )
+                    })}
                 </main>
             </div>
         </div>
