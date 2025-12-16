@@ -1,7 +1,5 @@
+```json
 {
-    "framework": "nextjs",
-    "buildCommand": "cd packages/client && npm install && npm run build",
-    "outputDirectory": "packages/client/.next",
     "headers": [
         {
             "source": "/(.*)",
@@ -18,3 +16,4 @@
         }
     ]
 }
+```
