@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { FastVLMWebcamV3 } from '@/features/ai/FastVLMWebcamV3';
+import { FastVLMWebcamV4 } from '@/features/ai/FastVLMWebcamV4';
 
 export const metadata: Metadata = {
     title: 'FastVLM On-Screen | Immersive Intelligence',
@@ -20,7 +20,7 @@ export default function FastVLMOnScreenPage() {
             </header>
 
             <main className="flex-1 flex flex-col items-center justify-center p-4">
-                <FastVLMWebcamV3 />
+                <FastVLMWebcamV4 />
 
                 <div className="mt-8 max-w-2xl text-center text-zinc-400">
                     <p>
