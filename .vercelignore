@@ -1,0 +1,4 @@
+# Exclude heavy server-side packages that are only used client-side
+node_modules/onnxruntime-node
+node_modules/@img/sharp-*
+node_modules/sharp
