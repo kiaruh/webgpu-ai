@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Exclude server-side packages from serverless bundle
   // These are only needed client-side (browser) for WebGPU/WASM
-  serverComponentsExternalPackages: ['onnxruntime-node', 'sharp'],
+  serverExternalPackages: ['onnxruntime-node', 'sharp'],
 
   webpack: (config) => {
     // See https://xenova.github.io/transformers.js/docs/getting-started.html#nextjs
