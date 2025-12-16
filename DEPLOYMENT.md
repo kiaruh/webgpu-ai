@@ -1,65 +1,79 @@
-# Deployment Guide
+# 🚀 Deployment Guide: WebGPU & Client-Side AI
 
-This project is a high-performance **WebGPU** application using Next.js. Deploying it requires specific configurations, especially regarding **Cross-Origin Headers** (COOP/COEP) which are necessary for `SharedArrayBuffer` support often used by client-side AI modules (ONNX Runtime via Transformers.js).
+This project uses **WebGPU** and **multi-threaded WebAssembly** (via ONNX Runtime) to run AI models in the browser.
 
-## 1. GitHub Repository
+## ⚠️ The Critical Constraint: Security Headers
 
-First, ensure your code is pushed to a remote GitHub repository.
+To enable `SharedArrayBuffer` (required for high-performance AI), browsers enforce a security isolation mode. You **must** serve your app with these HTTP headers:
 
-```bash
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-git push -u origin main
-```
+1.  `Cross-Origin-Opener-Policy: same-origin`
+2.  `Cross-Origin-Embedder-Policy: require-corp`
 
-*(Note: If you already have a remote, just run `git push`)*
+**If these headers are missing, the AI model will fail to load or crash the tab.**
 
 ---
 
-## 2. Vercel (Recommended)
+## ✅ What's Already Done
 
-Vercel is the easiest platform for this project as it natively supports Next.js headers required for WebGPU.
-
-1.  Log in to [Vercel](https://vercel.com).
-2.  Click **"Add New..."** -> **"Project"**.
-3.  Import your GitHub repository.
-4.  **Configuration**:
-    *   **Framework Preset**: Next.js (Auto-detected)
-    *   **Root Directory**: `packages/client` (Important! This is a monorepo).
-    *   **Build Command**: `next build` (default)
-    *   **Output Directory**: `.next` (default)
-5.  Click **Deploy**.
-
-**Why Vercel?**
-The `next.config.ts` file in this project sets `Cross-Origin-Opener-Policy` and `Cross-Origin-Embedder-Policy`. Vercel respects these headers automatically.
+- [x] **Code pushed to GitHub**: `https://github.com/kiaruh/webgpu-ai`
+- [x] **Security headers configured**: `next.config.ts` and `vercel.json` set COOP/COEP headers
+- [x] **Build optimized for Vercel**: 
+  - Removed platform-specific lockfiles
+  - Excluded heavy server-side packages (`onnxruntime-node`, `sharp`)
+  - Chat service disabled (no backend needed)
+- [x] **Local build verified**: Production build passes without errors
 
 ---
 
-## 3. Render
+## 🎯 Deployment: Vercel (Recommended)
 
-Render is also a great option but requires running as a **Web Service** (Node.js) rather than a Static Site to serve the correct headers.
+Vercel is the **only platform you need** for this project. Everything runs client-side.
 
-1.  Log in to [Render](https://render.com).
-2.  New -> **Web Service**.
-3.  Connect your GitHub repo.
-4.  **Configuration**:
-    *   **Root Directory**: `packages/client`
-    *   **Runtime**: Node
-    *   **Build Command**: `npm install && npm run build`
-    *   **Start Command**: `npm start`
-5.  Click **Create Web Service**.
+### Steps:
+1.  **Go to [Vercel Dashboard](https://vercel.com/new)**
+2.  **Import** your repository: `kiaruh/webgpu-ai`
+3.  **Configure Project**:
+    - **Framework Preset**: Next.js (Auto-detected)
+    - **Root Directory**: Click "Edit" → Select `packages/client`
+    - **Build Command**: Leave default (`npm run build`)
+    - **Output Directory**: Leave default (`.next`)
+4.  **Deploy**
+
+### What Happens:
+- Vercel reads `vercel.json` and applies the WebGPU security headers automatically
+- The build excludes server-side packages (stays under 250MB limit)
+- All features work: 3D scenes, FastVLM AI, Interactive Ads
+
+### Verification:
+Once deployed, test the FastVLM page (`/applied-ai/fastvlm-onscreen`). If the camera starts without errors, deployment succeeded.
 
 ---
 
-## 4. GitHub Pages (Not Recommended for WebGPU)
+## 🔧 Alternative: Render (Optional)
 
-**Warning**: GitHub Pages is a Static Host and **does not** allow setting custom HTTP Headers (`COOP`/`COEP`).
-If your AI model (Transformers.js/ONNX) relies on Multithreading or `SharedArrayBuffer`, **it will likely fail** on GitHub Pages.
+**Note**: Render is NOT needed unless you want to deploy the backend (NestJS) for future features.
 
-If you strictly need a static export and wish to try:
-1.  Open `packages/client/next.config.ts`.
-2.  Add `output: 'export'` to the config object.
-3.  Remove the `headers` section (since they won't work anyway).
-4.  Run `npm run build`.
-5.  Upload the `out` directory to GitHub Pages.
+For **frontend-only** deployment, Vercel is simpler and faster.
 
-*Again, this is not recommended for this specific High-Performance AI app.*
+If you still want to use Render:
+1.  Go to [Render Dashboard](https://dashboard.render.com/)
+2.  **New +** → **Blueprint**
+3.  Connect `kiaruh/webgpu-ai`
+4.  Render reads `render.yaml` and deploys automatically
+
+---
+
+## ❌ GitHub Pages (Not Supported)
+
+GitHub Pages **cannot** host this project because:
+- It's a static file host with no custom HTTP header support
+- Without COOP/COEP headers, WebGPU/AI features will fail
+- Use Vercel instead
+
+---
+
+## 📝 Summary
+
+**Current Status**: ✅ Ready to deploy to Vercel  
+**Backend Required**: ❌ No (all features are client-side)  
+**Estimated Deploy Time**: ~3 minutes
