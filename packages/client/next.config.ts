@@ -1,9 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Exclude server-side packages from serverless bundle
-  // These are only needed client-side (browser) for WebGPU/WASM
-  serverExternalPackages: ['onnxruntime-node', 'sharp'],
+  // Exclude heavy server-side packages from Vercel's file tracing
+  // These packages are only needed client-side (browser WebGPU/WASM)
+  outputFileTracingExcludes: {
+    '*': [
+      'node_modules/onnxruntime-node/**/*',
+      'node_modules/@img/sharp-*/**/*',
+      'node_modules/sharp/**/*',
+    ],
+  },
 
   webpack: (config) => {
     // See https://xenova.github.io/transformers.js/docs/getting-started.html#nextjs
