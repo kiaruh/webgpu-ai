@@ -1,0 +1,24 @@
+services:
+  # Frontend Code (Node.js Service to serve headers)
+  - type: web
+    name: immersive-client
+    env: node
+    buildCommand: cd packages/client && npm install && npm run build
+    startCommand: cd packages/client && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+    headers:
+      - path: /*
+        name: Cross-Origin-Opener-Policy
+        value: same-origin
+      - path: /*
+        name: Cross-Origin-Embedder-Policy
+        value: require-corp
+
+  # Backend (NestJS - Optional if you use it later)
+  # - type: web
+  #   name: immersive-server
+  #   env: node
+  #   buildCommand: cd packages/server && npm install && npm run build
+  #   startCommand: cd packages/server && npm run start:prod
