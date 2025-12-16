@@ -1,5 +1,5 @@
 services:
-  # Frontend Code (Node.js Service to serve headers)
+  # Frontend - Next.js serves headers from next.config.ts automatically
   - type: web
     name: immersive-client
     env: node
@@ -8,13 +8,6 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-    headers:
-      - path: /*
-        name: Cross-Origin-Opener-Policy
-        value: same-origin
-      - path: /*
-        name: Cross-Origin-Embedder-Policy
-        value: require-corp
 
   # Backend (NestJS - Optional if you use it later)
   # - type: web
