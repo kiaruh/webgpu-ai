@@ -1,7 +1,6 @@
 'use client';
 
 import { HubState, POIConfig } from './SpaceHubTypes';
-import { ChatWidget } from '@/features/chat/ChatWidget'; // We'll need to adapt this or wrap it
 import { useRouter } from 'next/navigation';
 import { X } from 'lucide-react';
 
@@ -63,12 +62,10 @@ export function SpaceHubUI({ hubState, selectedPOI, onClose }: SpaceHubUIProps) 
                         {/* Content Body */}
                         <div className="p-8">
                             {selectedPOI.id === 'CHAT' && (
-                                <div className="h-[400px] relative">
-                                    {/* We render the ChatWidget here, but we might need to adjust it to be always open */}
-                                    {/* For MVP, we can just use the existing widget logic or a simplified version */}
-                                    <p className="text-center text-zinc-400 mb-4 animate-pulse">Establishing Secure Uplink...</p>
-                                    <div className="absolute inset-0">
-                                        <ChatWidget embedded={true} />
+                                <div className="h-[400px] flex items-center justify-center">
+                                    <div className="text-center space-y-4">
+                                        <p className="text-zinc-400 text-lg">Chat Service Offline</p>
+                                        <p className="text-zinc-600 text-sm">Backend deployment required</p>
                                     </div>
                                 </div>
                             )}
